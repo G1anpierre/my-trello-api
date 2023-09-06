@@ -12,7 +12,25 @@ datasource db {
 
 model User {
   id    String  @id @default(uuid())
+  createdAt DateTime @default(now())
   email String  @unique
   name  String?
   password String
+  tasks Task[]
+}
+
+enum TASK_STATUS {
+  PLANNED
+  DOING
+  COMPLETED
+}
+
+model Task {
+  id    String  @id @default(uuid())
+  createdAt DateTime @default(now())
+  title String
+  description String
+  status TASK_STATUS
+  user User @relation(fields: [userId], references: [id])
+  userId String
 }
