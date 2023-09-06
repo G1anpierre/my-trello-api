@@ -12,6 +12,22 @@ export const getTasks = async (req, res) => {
   }
 }
 
+export const getFilterTasks = async (req, res) => {
+  try {
+    const filteredTasks = await prisma.task.findMany({
+      where: {
+        status: req.params.filter,
+      },
+    })
+
+    res.json({data: filteredTasks})
+  } catch (e) {
+    console.error(e)
+    res.status(500)
+    res.json({error: 'GetFilterTasks - Something went wrong by getting tasks'})
+  }
+}
+
 export const createTask = async (req, res) => {
   try {
     const createdTask = await prisma.task.create({

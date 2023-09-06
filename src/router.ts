@@ -1,12 +1,24 @@
 import {Router} from 'express'
-import {body} from 'express-validator'
-import {getTasks, createTask, deleteTask, moveTask} from './handlers/task'
+import {body, param} from 'express-validator'
+import {
+  getTasks,
+  createTask,
+  deleteTask,
+  moveTask,
+  getFilterTasks,
+} from './handlers/task'
 
 const router = Router()
 // * Task
 
 // GET /api/tasks
 router.get('/tasks', getTasks)
+
+router.get(
+  '/tasks/:filter',
+  param('filter').isIn(['PLANNED', 'DOING', 'COMPLETED']),
+  getFilterTasks,
+)
 // POST /api/tasks
 router.post(
   '/task',
