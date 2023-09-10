@@ -15,7 +15,7 @@ export const getTasks = async (req, res) => {
 export const getFilterTasks = async (req, res) => {
   try {
     const filteredTasks = await prisma.task.findMany({
-      orderBy: [{createdAt: 'asc'}, {id: 'asc'}],
+      orderBy: [{createdAt: 'desc'}],
       where: {
         status: req.params.filter,
       },
