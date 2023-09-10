@@ -15,6 +15,7 @@ export const getTasks = async (req, res) => {
 export const getFilterTasks = async (req, res) => {
   try {
     const filteredTasks = await prisma.task.findMany({
+      orderBy: [{createdAt: 'asc'}, {id: 'asc'}],
       where: {
         status: req.params.filter,
       },
@@ -80,5 +81,26 @@ export const deleteTask = async (req, res) => {
     console.error(e)
     res.status(500)
     res.json({error: 'DeleteTask - Something went wrong by deleting task'})
+  }
+}
+
+export const updateTask = async (req, res) => {
+  try {
+    const updatedTask = await prisma.task.update({
+      where: {
+        id: req.params.id,
+        userId: req.user.id,
+      },
+      data: {
+        title: req.body.title,
+        description: req.body.description,
+      },
+    })
+
+    res.json({data: updatedTask})
+  } catch (e) {
+    console.error(e)
+    res.status(500)
+    res.json({error: 'UpdateTask - Something went wrong by updating task'})
   }
 }

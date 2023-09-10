@@ -36,3 +36,17 @@ export const LoginUser = async (req, res) => {
   const token = createJWT(user)
   res.json({token})
 }
+
+export const getUser = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user.id,
+    },
+  })
+
+  if (!user) {
+    return res.status(404).json({message: 'User not found'})
+  }
+
+  res.json({data: user})
+}

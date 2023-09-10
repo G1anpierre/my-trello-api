@@ -5,6 +5,7 @@ import {
   createTask,
   deleteTask,
   moveTask,
+  updateTask,
   getFilterTasks,
 } from './handlers/task'
 
@@ -30,8 +31,15 @@ router.post(
 // UPDATE /api/task/:id
 router.put(
   '/task/:id',
-  body('status').isIn(['PLANNED', 'DOING', 'COMPLETED']),
+  body('status').exists().isIn(['PLANNED', 'DOING', 'COMPLETED']),
   moveTask,
+)
+
+router.put(
+  '/task/:id/edit',
+  body('title').exists().isString(),
+  body('description').isString(),
+  updateTask,
 )
 
 // DELETE /api/tasks/:id
