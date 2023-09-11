@@ -8,6 +8,7 @@ import {
   updateTask,
   getFilterTasks,
 } from './handlers/task'
+import {getAppUser, getCreatorCard} from './handlers/user'
 
 const router = Router()
 // * Task
@@ -44,5 +45,12 @@ router.put(
 
 // DELETE /api/tasks/:id
 router.delete('/tasks/:id', deleteTask)
+
+// * Users
+
+// GET /api/user
+router.get('/user', getAppUser)
+
+router.get('/usercard/:id', getCreatorCard)
 
 export default router

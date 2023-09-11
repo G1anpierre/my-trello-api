@@ -37,10 +37,24 @@ export const LoginUser = async (req, res) => {
   res.json({token})
 }
 
-export const getUser = async (req, res) => {
+export const getAppUser = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
       id: req.user.id,
+    },
+  })
+
+  if (!user) {
+    return res.status(404).json({message: 'User not found'})
+  }
+
+  res.json({data: user})
+}
+
+export const getCreatorCard = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.params.id,
     },
   })
 
