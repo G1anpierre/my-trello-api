@@ -33,6 +33,14 @@ export const LoginUser = async (req, res) => {
     return res.status(400).json({message: 'Invalid Password'})
   }
 
+  if (req.body.rememberMe) {
+    const rememberMeToken = createJWT(user)
+    await prisma.user.update({
+      where: {id: user.id},
+      data: {remenberMeToken: rememberMeToken},
+    })
+  }
+
   const token = createJWT(user)
   res.json({token})
 }
