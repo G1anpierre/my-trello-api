@@ -34,7 +34,7 @@ export const LoginUser = async (req, res) => {
   }
 
   if (req.body.rememberMe) {
-    const rememberMeToken = createJWT(user)
+    const rememberMeToken = createJWT(user, req.body.rememberMe)
     await prisma.user.update({
       where: {id: user.id},
       data: {remenberMeToken: rememberMeToken},

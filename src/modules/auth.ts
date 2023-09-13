@@ -12,10 +12,11 @@ export const hashPassword = password => {
 }
 
 // * When Sign Up and Sign In, generate token to send it to frontend
-export const createJWT = user => {
+export const createJWT = (user, rememberMe?) => {
   const token = jwt.sign(
     {id: user.id, email: user.email},
     process.env.JWT_SECRET,
+    {expiresIn: rememberMe ? '7d' : '24h'},
   )
   return token
 }
